@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Thrive Axis — A New Chapter · Project Meera</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- For better browser support, add PNG fallback -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <!-- For Apple devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <style>
+        /* ----------------------------------------------
+            RESET & BASE
+        ------------------------------------------------ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #F7F3EC;          /* warm cream / elegant off-white */
+            --bg-deep: #F0E9DD;      /* deeper cream for subtle forms */
+            --navy: #14213D;         /* deep navy / primary typography */
+            --navy-soft: #1D2C4A;    /* hover navy */
+            --gold: #B49A6A;         /* restrained refined gold */
+            --gold-soft: #CBB786;    /* lighter gold for subtle details */
+            --gold-pale: #E3D3B5;    /* pale gold linework */
+            --text-soft: #4A4A4A;    /* muted supporting text */
+            --white-cream: #FCFAF5;  /* near white cream for button text */
+            --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+            --sans: 'Inter', 'Helvetica Neue', 'Segoe UI', sans-serif;
+            --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-gold: 0 12px 30px -12px rgba(180, 154, 106, 0.25);
+            --shadow-navy: 0 12px 28px -8px rgba(20, 33, 61, 0.18);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--navy);
+            font-family: var(--sans);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* fine grain texture overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+            z-index: 0;
+        }
+
+        .hero-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1120px;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        /* ----------------------------------------------
+            SUBTLE BACKGROUND ART / DEPTH
+        ------------------------------------------------ */
+        .hero-bg-art {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* thin vertical gold line left */
+        .gold-line-left {
+            position: absolute;
+            top: 8%;
+            left: 4%;
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(180,154,106,0.5), rgba(180,154,106,0));
+        }
+
+        /* thin vertical gold line right */
+        .gold-line-right {
+            position: absolute;
+            bottom: 10%;
+            right: 3%;
+            width: 1px;
+            height: 160px;
+            background: linear-gradient(to top, rgba(180,154,106,0.4), rgba(180,154,106,0));
+        }
+
+        /* geometric ring / arc */
+        .abstract-ring {
+            position: absolute;
+            top: 18%;
+            right: 10%;
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(180,154,106,0.18);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .abstract-ring::after {
+            content: "";
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            width: 124px;
+            height: 124px;
+            border: 1px dashed rgba(180,154,106,0.22);
+            border-radius: 50%;
+        }
+
+        /* small diamond */
+        .diamond {
+            position: absolute;
+            bottom: 22%;
+            left: 8%;
+            width: 7px;
+            height: 7px;
+            background-color: var(--gold);
+            transform: rotate(45deg);
+            opacity: 0.35;
+            box-shadow: 0 0 15px rgba(180,154,106,0.3);
+        }
+
+        /* soft radial light */
+        .radial-light {
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 680px;
+            height: 680px;
+            background: radial-gradient(circle, rgba(180,154,106,0.06) 0%, rgba(247,243,236,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* subtle queue/flow-inspired line pattern for project meera */
+        .flow-lines {
+            position: absolute;
+            bottom: 12%;
+            right: 8%;
+            width: 220px;
+            height: 80px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .flow-lines span {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(180,154,106,0.6), rgba(180,154,106,0.05));
+            border-radius: 10px;
+        }
+
+        .flow-lines span:nth-child(1) { width: 80%; top: 0; left: 10%; }
+        .flow-lines span:nth-child(2) { width: 60%; top: 20px; left: 0; }
+        .flow-lines span:nth-child(3) { width: 90%; top: 40px; left: 5%; }
+        .flow-lines span:nth-child(4) { width: 40%; top: 60px; left: 20%; }
+
+        /* ----------------------------------------------
+            LOGO
+        ------------------------------------------------ */
+        .logo {
+            position: relative;
+            z-index: 3;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeDown 1s var(--ease) forwards 0.2s;
+        }
+
+        .logo-text {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-mark {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            transform: rotate(45deg);
+            box-shadow: 0 0 14px rgba(180,154,106,0.6);
+        }
+
+        .logo-line {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.5;
+        }
+
+        /* ----------------------------------------------
+            EYEBROW
+        ------------------------------------------------ */
+        .eyebrow {
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.8rem;
+            opacity: 0;
+            animation: fadeUp 0.9s var(--ease) forwards 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 30px;
+            height: 1px;
+            background: rgba(180,154,106,0.5);
+        }
+
+        /* ----------------------------------------------
+            MAIN HEADLINE
+        ------------------------------------------------ */
+        .main-headline {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(3.5rem, 11vw, 7rem);
+            line-height: 1.03;
+            letter-spacing: -0.02em;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease) forwards 0.7s;
+            text-wrap: balance;
+        }
+
+        .supporting-headline {
+            font-weight: 300;
+            font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+            letter-spacing: 0.02em;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease) forwards 0.9s;
+        }
+
+        .supporting-copy {
+            font-weight: 300;
+            font-size: 1rem;
+            color: var(--text-soft);
+            max-width: 480px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease) forwards 1.05s;
+        }
+
+        /* ----------------------------------------------
+            PROJECT MEERA PANEL
+        ------------------------------------------------ */
+        .project-meera {
+            margin: 1.8rem auto 2.5rem;
+            width: 100%;
+            max-width: 650px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease) forwards 1.25s;
+            position: relative;
+            padding: 2rem 2.5rem;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(180,154,106,0.25);
+            border-radius: 6px;
+            box-shadow: 0 15px 30px -20px rgba(20,33,61,0.1);
+            backdrop-filter: none;
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .project-meera:hover {
+            border-color: rgba(180,154,106,0.45);
+            box-shadow: 0 20px 40px -20px rgba(20,33,61,0.15), 0 0 0 1px rgba(180,154,106,0.1);
+        }
+
+        .meera-gold-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+        }
+
+        .meera-title {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            letter-spacing: 0.03em;
+            color: var(--navy);
+            margin-bottom: 0.4rem;
+        }
+
+        .meera-supporting {
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--navy);
+            opacity: 0.85;
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .meera-description {
+            font-weight: 300;
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            max-width: 520px;
+            margin: 0 auto 1rem;
+        }
+
+        .launch-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 0.8rem;
+        }
+
+        .launch-indicator::before {
+            content: "";
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.6;
+        }
+
+        /* meera subtle frame line */
+        .project-meera::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(180,154,106,0.12);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        /* ----------------------------------------------
+            CTA
+        ------------------------------------------------ */
+        .cta-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease) forwards 1.45s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--navy);
+            color: var(--white-cream);
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1.2rem 3.2rem;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            transition: all 0.4s var(--ease);
+            box-shadow: var(--shadow-navy);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .cta-button::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--gold-soft);
+            opacity: 0;
+            transition: opacity 0.35s var(--ease);
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            background-color: var(--navy-soft);
+            border-color: var(--gold-soft);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 35px -8px rgba(20,33,61,0.4), 0 0 0 1px rgba(180,154,106,0.3);
+        }
+
+        .cta-button:hover::after {
+            opacity: 0.08;
+        }
+
+        .secondary-cta {
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 0.6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 3px;
+        }
+
+        .secondary-cta span {
+            transition: transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .secondary-cta:hover {
+            border-bottom-color: rgba(180,154,106,0.5);
+            color: var(--navy);
+        }
+
+        .secondary-cta:hover span {
+            transform: translateX(4px);
+        }
+
+        /* ----------------------------------------------
+            ANIMATION
+        ------------------------------------------------ */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ----------------------------------------------
+            RESPONSIVE
+        ------------------------------------------------ */
+        @media (max-width: 700px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero-wrapper {
+                min-height: 100vh;
+                justify-content: center;
+                padding: 1.5rem 0.8rem;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+                letter-spacing: 4px;
+                gap: 0.5rem;
+            }
+
+            .logo-line {
+                width: 30px;
+            }
+
+            .eyebrow {
+                font-size: 0.7rem;
+                letter-spacing: 3px;
+                gap: 10px;
+            }
+
+            .main-headline {
+                font-size: clamp(3rem, 15vw, 4.5rem);
+            }
+
+            .supporting-headline {
+                font-size: 1.2rem;
+            }
+
+            .supporting-copy {
+                font-size: 0.95rem;
+                max-width: 95%;
+            }
+
+            .project-meera {
+                padding: 1.5rem 1.2rem;
+                margin: 1.5rem auto 2rem;
+                max-width: 420px;
+            }
+
+            .meera-title {
+                font-size: 1.8rem;
+            }
+
+            .meera-description {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+                white-space: normal;
+                width: 100%;
+                text-align: center;
+            }
+
+            .flow-lines {
+                right: 2%;
+                bottom: 5%;
+                width: 150px;
+            }
+
+            .abstract-ring {
+                right: -30px;
+                width: 140px;
+                height: 140px;
+            }
+
+            .gold-line-left {
+                left: 2%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .cta-button {
+                width: 100%;
+                padding: 0.9rem 1.2rem;
+            }
+            .project-meera {
+                max-width: 100%;
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-wrapper">
+
+        <!-- subtle background art -->
+        <div class="hero-bg-art">
+            <div class="gold-line-left"></div>
+            <div class="gold-line-right"></div>
+            <div class="abstract-ring"></div>
+            <div class="diamond"></div>
+            <div class="radial-light"></div>
+            <div class="flow-lines">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- logo -->
+        <div class="logo">
+            <div class="logo-text">
+                <span class="logo-mark"></span>
+                THRIVE AXIS
+                <span class="logo-line"></span>
+            </div>
+        </div>
+
+        <!-- eyebrow -->
+        <div class="eyebrow">A NEW CHAPTER IS ABOUT TO BEGIN</div>
+
+        <!-- main headline -->
+        <h1 class="main-headline">THRIVE AXIS</h1>
+
+        <!-- supporting headline -->
+        <div class="supporting-headline">Something exceptional is taking shape.</div>
+
+        <!-- supporting copy -->
+        <p class="supporting-copy">Our new digital home is coming soon.<br>Until then, discover the current Thrive Axis experience.</p>
+
+        <!-- Project Meera announcement -->
+        <div class="project-meera">
+            <div class="meera-gold-label">COMING SOON</div>
+            <div class="meera-title">PROJECT MEERA</div>
+            <div class="meera-supporting">A smarter way to experience queues.</div>
+            <p class="meera-description">Project Meera is Thrive Axis's upcoming queue management solution, designed to transform waiting into a smarter, simpler, and more efficient experience.</p>
+            <div class="launch-indicator">LAUNCHING SOON</div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-wrapper">
+            <a href="https://thriveaxis.live" class="cta-button" target="_blank" rel="noopener noreferrer">
+                VISIT THRIVEAXIS.LIVE
+            </a>
+            <a href="https://thriveaxis.live" class="secondary-cta" target="_blank" rel="noopener noreferrer">
+                Explore the current Thrive Axis experience <span>→</span>
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>
